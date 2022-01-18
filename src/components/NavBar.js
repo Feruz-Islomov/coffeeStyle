@@ -7,9 +7,7 @@ const NavBar = () => {
     <div id="home" className="navbar">
       <ScrollToTop smooth color="blue" />
       <div>
-        <a href="/">
-          <img className="logo" src=".\photo\pl1.png" alt="pizzaHut" />
-        </a>
+        <img className="logo" src=".\photo\pl1.png" alt="pizzaHut" />
       </div>
 
       <div className="navright">
