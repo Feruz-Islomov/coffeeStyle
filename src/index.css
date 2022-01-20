@@ -139,8 +139,11 @@ body {
 /* contact */
 .contact {
   background-color: black;
-  opacity: 0.7;
-  height: 300px;
+  opacity: 0.9;
   color: white;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
 }
