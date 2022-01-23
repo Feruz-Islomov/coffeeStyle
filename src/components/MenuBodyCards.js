@@ -53,7 +53,9 @@ const MenuBodyCards = (props) => {
           <div onClick={() => setN(5)}>Drink</div>
         </div>
       </div>
-      {products ? <div className="menubody"> {showbody()}</div> : null}
+      {/* {products ? <div className="menubody"> {showbody()}</div> : null} */}
+      {products && <div className="menubody"> {showbody()}</div>}
+
       <Contact />
     </>
   );
