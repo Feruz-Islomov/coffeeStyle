@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import Contact from "./components/Contact";
 import MenuBodyCards from "./components/MenuBodyCards";
 import NavBar from "./components/NavBar";
 import data from "./data";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProductManage from "./components/ProductManage";
-import Form from "./components/Form";
+import Form from "./components/Forms/Form";
 
 function App() {
   const [products, setProducts] = useState();
   useEffect(() => {
-    setProducts(data.products);
+    setProducts(data);
   }, []);
+
+  console.log(products);
   return (
     <div className="app">
       <div className="choco"></div>
@@ -25,12 +26,10 @@ function App() {
         <Route
           exact
           path="/productmanage"
-          render={(props) => <ProductManage {...props} products={products} />}
+          render={(props) => <ProductManage {...props} data={products} />}
         />
-        <Route exact path="/form/:id" render={() => <Form />} />
+        <Route exact path="/form/:id" render={(props) => <Form {...props} />} />
       </Router>
-
-      <Contact />
     </div>
   );
 }

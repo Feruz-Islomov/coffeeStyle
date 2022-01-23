@@ -1,25 +1,26 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-const ProductManage = ({ products }) => {
+const ProductManage = (props) => {
+  const { data } = props;
+  const products = data.products;
+  const menus = data.menus;
+
   const history = useHistory();
   return (
     <div>
-      {products ? (
+      {data ? (
         <div>
           <button className="btn add" onClick={() => history.push("/form/add")}>
             + ADD PRODUCT
           </button>
           <div className="menubar">
             <div>
-              <img className="micon" src="\photo\p12.png" alt="pizzaHut" />
-              <div>Pizza</div>
-              <button
-                className="btn"
-                onClick={() => history.push("/form/editmenu")}
-              >
-                EDIT
-              </button>
+              <img className="micon" src={menus[0].img} alt={menus[0].name} />
+              <div>{menus[0].name}</div>
+              <Link to={{ pathname: "/form/editmenu", state: menus[0] }}>
+                <button className="btn">EDIT</button>
+              </Link>
             </div>
           </div>
 
@@ -42,12 +43,11 @@ const ProductManage = ({ products }) => {
                     </h4>
                   </div>
                   <div className="button">
-                    <button
-                      className="btn"
-                      onClick={() => history.push("/form/editproduct")}
+                    <Link
+                      to={{ pathname: "/form/editproduct", state: { item } }}
                     >
-                      EDIT
-                    </button>
+                      <button className="btn">EDIT</button>
+                    </Link>
                     <button className="btn delete">DELETE</button>
                   </div>
                 </div>
@@ -56,14 +56,11 @@ const ProductManage = ({ products }) => {
           </div>
           <div className="menubar">
             <div>
-              <img className="micon" src="\photo\burger2.png" alt="pizzaHut" />
-              <div>Burger</div>
-              <button
-                className="btn"
-                onClick={() => history.push("/form/editmenu")}
-              >
-                EDIT
-              </button>
+              <img className="micon" src={menus[1].img} alt={menus[1].name} />
+              <div>{menus[1].name}</div>
+              <Link to={{ pathname: "/form/editmenu", state: menus[1] }}>
+                <button className="btn">EDIT</button>
+              </Link>
             </div>
           </div>
           <div className="groupedcards">
@@ -83,12 +80,11 @@ const ProductManage = ({ products }) => {
                     </h4>
                   </div>
                   <div className="button">
-                    <button
-                      className="btn"
-                      onClick={() => history.push("/form/editproduct")}
+                    <Link
+                      to={{ pathname: "/form/editproduct", state: { item } }}
                     >
-                      EDIT
-                    </button>
+                      <button className="btn">EDIT</button>
+                    </Link>
                     <button className="btn delete">DELETE</button>
                   </div>
                 </div>
@@ -97,14 +93,11 @@ const ProductManage = ({ products }) => {
           </div>
           <div className="menubar">
             <div>
-              <img className="micon" src="\photo\s2.png" alt="pizzaHut" />
-              <div>Sauce</div>
-              <button
-                className="btn"
-                onClick={() => history.push("/form/editmenu")}
-              >
-                EDIT
-              </button>
+              <img className="micon" src={menus[2].img} alt={menus[2].name} />
+              <div>{menus[2].name}</div>
+              <Link to={{ pathname: "/form/editmenu", state: menus[2] }}>
+                <button className="btn">EDIT</button>
+              </Link>
             </div>
           </div>
           <div className="groupedcards">
@@ -122,12 +115,11 @@ const ProductManage = ({ products }) => {
                     </h4>
                   </div>
                   <div className="button">
-                    <button
-                      className="btn"
-                      onClick={() => history.push("/form/editproduct")}
+                    <Link
+                      to={{ pathname: "/form/editproduct", state: { item } }}
                     >
-                      EDIT
-                    </button>
+                      <button className="btn">EDIT</button>
+                    </Link>
                     <button className="btn delete">DELETE</button>
                   </div>
                 </div>
@@ -136,14 +128,11 @@ const ProductManage = ({ products }) => {
           </div>
           <div className="menubar">
             <div>
-              <img className="micon" src="\photo\cake.png" alt="pizzaHut" />
-              <div>Desert</div>
-              <button
-                className="btn"
-                onClick={() => history.push("/form/editmenu")}
-              >
-                EDIT
-              </button>
+              <img className="micon" src={menus[3].img} alt={menus[3].name} />
+              <div>{menus[3].name}</div>
+              <Link to={{ pathname: "/form/editmenu", state: menus[3] }}>
+                <button className="btn">EDIT</button>
+              </Link>
             </div>
           </div>
 
@@ -162,12 +151,11 @@ const ProductManage = ({ products }) => {
                     </h4>
                   </div>
                   <div className="button">
-                    <button
-                      className="btn"
-                      onClick={() => history.push("/form/editproduct")}
+                    <Link
+                      to={{ pathname: "/form/editproduct", state: { item } }}
                     >
-                      EDIT
-                    </button>
+                      <button className="btn">EDIT</button>
+                    </Link>
                     <button className="btn delete">DELETE</button>
                   </div>
                 </div>
@@ -176,14 +164,11 @@ const ProductManage = ({ products }) => {
           </div>
           <div className="menubar">
             <div>
-              <img className="micon" src="\photo\coffee.png" alt="pizzaHut" />
-              <div>Drink</div>
-              <button
-                className="btn"
-                onClick={() => history.push("/form/editmenu")}
-              >
-                EDIT
-              </button>
+              <img className="micon" src={menus[4].img} alt={menus[4].name} />
+              <div>{menus[4].name}</div>
+              <Link to={{ pathname: "/form/editmenu", state: menus[4] }}>
+                <button className="btn">EDIT</button>
+              </Link>
             </div>
           </div>
           <div className="groupedcards">
@@ -201,12 +186,11 @@ const ProductManage = ({ products }) => {
                     </h4>
                   </div>
                   <div className="button">
-                    <button
-                      className="btn"
-                      onClick={() => history.push("/form/editproduct")}
+                    <Link
+                      to={{ pathname: "/form/editproduct", state: { item } }}
                     >
-                      EDIT
-                    </button>
+                      <button className="btn">EDIT</button>
+                    </Link>
                     <button className="btn delete">DELETE</button>
                   </div>
                 </div>

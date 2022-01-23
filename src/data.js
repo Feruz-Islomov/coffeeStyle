@@ -1,4 +1,26 @@
 const data = {
+  menus: [
+    {
+      name: "Pizza",
+      img: "./photo/p12.png",
+    },
+    {
+      name: "Burger",
+      img: "/photo/burger2.png",
+    },
+    {
+      name: "Sauce",
+      img: "/photo/s2.png",
+    },
+    {
+      name: "Dessert",
+      img: "/photo/cake.png",
+    },
+    {
+      name: "Drink",
+      img: "./photo/coffee.png",
+    },
+  ],
   products: {
     pizza: [
       {

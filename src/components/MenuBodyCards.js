@@ -5,21 +5,22 @@ import PizzaCard from "./Cards/PizzaCard";
 import SauceCard from "./Cards/SauceCard";
 import { useEffect, useState } from "react";
 import Aos from "aos";
+import Contact from "./Contact";
 
 const MenuBodyCards = (props) => {
   const { products } = props;
   const [n, setN] = useState(1);
   const showbody = () => {
     if (n === 1) {
-      return <PizzaCard pizza={products.pizza} />;
+      return <PizzaCard pizza={products.products.pizza} />;
     } else if (n === 2) {
-      return <BurgerCard burger={products.burger} />;
+      return <BurgerCard burger={products.products.burger} />;
     } else if (n === 3) {
-      return <SauceCard sauce={products.sauce} />;
+      return <SauceCard sauce={products.products.sauce} />;
     } else if (n === 4) {
-      return <DessertCard dessert={products.dessert} />;
+      return <DessertCard dessert={products.products.dessert} />;
     } else if (n === 5) {
-      return <DrinkCard drink={products.drink} />;
+      return <DrinkCard drink={products.products.drink} />;
     }
   };
   useEffect(() => {
@@ -53,6 +54,7 @@ const MenuBodyCards = (props) => {
         </div>
       </div>
       {products ? <div className="menubody"> {showbody()}</div> : null}
+      <Contact />
     </>
   );
 };
