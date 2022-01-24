@@ -1,6 +1,11 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
-import fs from "fs";
+import getRoutes from "./routes/dataRouter.js";
+import path from "path";
+// import path, { __dirname } from "path/posix";
+const __dirname = path.resolve();
+
+const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(
@@ -10,25 +15,10 @@ app.use(
 );
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-app.get("/", (req, res) => {
-  fs.readFile("./data.json", "utf8", (err, data) => {
-    if (err) throw err;
-    res.send(data);
-  });
-});
-app.post("/posting", (req, res) => {
-  //   console.log(req.body);
-  //   fs.unlink("./asus.json", (err) => {
-  //     if (err) throw err;
-  //     res.send("asus is deleted!");
-  //   });
-  fs.writeFile("./product.json", JSON.stringify(req.body), (err) => {
-    if (err) throw err;
-    res.send("file is written successfully!");
-  });
-});
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT || 5000;
+app.use("/api", getRoutes);
+
 app.listen(port, () => {
   console.log(`running on ${port}`);
 });

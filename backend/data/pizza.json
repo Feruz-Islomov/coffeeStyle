@@ -1,0 +1,90 @@
+[
+  {
+    "id": "728c9a0f-93c0-4751-859a-ab95f9dcf21c",
+    "name": "Margarita",
+    "img": "./photo/pizza7.png",
+    "comment": "maestro sauce, cheese, chicken breast, olive, green and red pepper, cheese, chicken breast, olive, green and red pepper",
+    "sprice": 27000,
+    "mprice": 43000,
+    "lprice": 57000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "1e4afa79-a809-4aee-8d16-4cbca61bcc7a",
+    "name": "Cheddar pizza",
+    "img": "./photo/pizza1.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "ab83a909-0228-454d-91f4-506e8ef29e9f",
+    "name": "Indian pizza",
+    "img": "./photo/pizza2.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "0b57233f-d75a-4c30-974e-cd5a0e88dc2c",
+    "name": "Limo pizza",
+    "img": "./photo/pizza3.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "e15e51f9-5d73-41f6-8bd1-321dfc7cebcd",
+    "name": "New York pizza",
+    "img": "./photo/pizza4.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "daffa077-4192-4ee8-860d-939f6ea7bfcb",
+    "name": "Tomato pizza",
+    "img": "./photo/pizza5.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "a9225512-5913-4cd0-93d6-a731a6ba03b1",
+    "name": "Corn pizza",
+    "img": "./photo/pizza6.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 54000,
+    "category": "pizza",
+    "menu": "pizza"
+  },
+  {
+    "id": "f0b6c15a-47a3-4588-b79f-9702c48a8c30",
+    "name": "Twin pizza",
+    "img": "./photo/pizza8.png",
+    "comment": "olive, green and red pepper, green and red pepper",
+    "sprice": 25000,
+    "mprice": 41000,
+    "lprice": 78000,
+    "category": "pizza",
+    "menu": "pizza"
+  }
+]
