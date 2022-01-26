@@ -3,59 +3,51 @@ import DessertCard from "./Cards/DessertCard";
 import DrinkCard from "./Cards/DrinkCard";
 import PizzaCard from "./Cards/PizzaCard";
 import SauceCard from "./Cards/SauceCard";
-import { useEffect, useState } from "react";
-import Aos from "aos";
+import { useState } from "react";
 import Contact from "./Contact";
+import { url } from "./Api/Api";
 
 const MenuBodyCards = (props) => {
-  const { products } = props;
-  const [n, setN] = useState(1);
+  const { mdata, pdata, bdata, sdata, dedata, drdata } = props;
+  // console.log(menus);
+  // const products = data.products;
+  const menus = mdata;
+  const [n, setN] = useState(0);
   const showbody = () => {
-    if (n === 1) {
-      return <PizzaCard pizza={products.products.pizza} />;
+    if (n === 0) {
+      return <PizzaCard pizza={pdata} />;
+    } else if (n === 1) {
+      return <BurgerCard burger={bdata} />;
     } else if (n === 2) {
-      return <BurgerCard burger={products.products.burger} />;
+      return <SauceCard sauce={sdata} />;
     } else if (n === 3) {
-      return <SauceCard sauce={products.products.sauce} />;
+      return <DessertCard dessert={dedata} />;
     } else if (n === 4) {
-      return <DessertCard dessert={products.products.dessert} />;
-    } else if (n === 5) {
-      return <DrinkCard drink={products.products.drink} />;
+      return <DrinkCard drink={drdata} />;
     }
   };
-  useEffect(() => {
-    Aos.init({
-      duration: 1000,
-      easing: "ease-out-quart",
-    });
-  });
+
   return (
     <>
-      <div className="menubar" data-aos="slide-down">
-        <div>
-          <img className="micon" src=".\photo\p12.png" alt="pizzaHut" />
-          <div onClick={() => setN(1)}>Pizza</div>
-        </div>
-        <div>
-          <img className="micon" src=".\photo\burger2.png" alt="pizzaHut" />
-          <div onClick={() => setN(2)}>Burger</div>
-        </div>
-        <div>
-          <img className="micon" src=".\photo\s2.png" alt="pizzaHut" />
-          <div onClick={() => setN(3)}>Sauce</div>
-        </div>
-        <div>
-          <img className="micon" src=".\photo\cake.png" alt="pizzaHut" />
-          <div onClick={() => setN(4)}>Dessert</div>
-        </div>
-        <div>
-          <img className="micon" src=".\photo\coffee.png" alt="pizzaHut" />
-          <div onClick={() => setN(5)}>Drink</div>
-        </div>
-      </div>
-      {/* {products ? <div className="menubody"> {showbody()}</div> : null} */}
-      {products && <div className="menubody"> {showbody()}</div>}
-
+      {mdata && (
+        <>
+          <div className="menubar">
+            {menus.map((menu, n) => {
+              return (
+                <div key={n}>
+                  <img
+                    className="micon"
+                    src={`${url}/${menu.img}`}
+                    alt={menu.name}
+                  />
+                  <div onClick={() => setN(n)}>{menu.name}</div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="menubody"> {showbody()}</div>
+        </>
+      )}
       <Contact />
     </>
   );

@@ -1,30 +1,44 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { updateProduct } from "../Api/Api";
 
 const FormEditProduct = (props) => {
   const item = props.location.state.item;
-  let category;
-  if (item.sprice) {
-    category = "pizza";
-  } else {
-    category = "other";
-  }
 
   const history = useHistory();
   const [img, setImg] = useState(item.img);
   const refimg = useRef();
   const [name, setName] = useState(item.name);
-  const [ingredient, setIngredient] = useState(item.comment);
-  //   const [category, setCategory] = useState("pizza"); //just for
+  const [ingredient, setIngredient] = useState(item.ingredient);
   const [price, setPrice] = useState(item.price);
   const [sprice, setSprice] = useState(item.sprice);
   const [mprice, setMprice] = useState(item.mprice);
   const [lprice, setLprice] = useState(item.lprice);
+  const [menu, setMenu] = useState(item.menu);
 
   const update = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log(img);
+    const formData = new FormData();
+    if (item.category === "other") {
+      formData.append("id", item.id);
+      formData.append("img", img);
+      formData.append("name", name);
+      formData.append("ingredient", ingredient);
+      formData.append("price", price);
+      formData.append("menu", menu);
+    } else if (item.category === "pizza") {
+      formData.append("id", item.id);
+      formData.append("img", img);
+      formData.append("name", name);
+      formData.append("ingredient", ingredient);
+      formData.append("sprice", sprice);
+      formData.append("mprice", mprice);
+      formData.append("lprice", lprice);
+      formData.append("menu", menu);
+    }
+    updateProduct(formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     setName("");
     setIngredient("");
     setPrice("");
@@ -72,7 +86,7 @@ const FormEditProduct = (props) => {
               required
             />
           </div>
-          {category === "pizza" ? (
+          {item.category === "pizza" ? (
             <>
               <div className="inputfield">
                 <label>Small price</label>
@@ -117,7 +131,19 @@ const FormEditProduct = (props) => {
               />
             </div>
           )}
-
+          <div className="inputfield">
+            <label>Menu</label>
+            <div className="custom_select">
+              <select value={menu} onChange={(e) => setMenu(e.target.value)}>
+                <option>select menu</option>
+                <option value="pizza">Pizza</option>
+                <option value="burger">Burger</option>
+                <option value="sauce">Sauce</option>
+                <option value="dessert">Dessert</option>
+                <option value="drink">Drink</option>
+              </select>
+            </div>
+          </div>
           <div className="inputfield">
             <input type="submit" value="Update" className="inputbtn" />
           </div>

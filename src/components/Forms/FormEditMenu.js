@@ -1,16 +1,23 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { updatemenu } from "../Api/Api";
 
 const FormEditMenu = (props) => {
-  const menu = props.location.state;
+  const item = props.location.state;
   const history = useHistory();
   const [img, setImg] = useState();
   const refimg = useRef();
-  const [name, setName] = useState(menu.name);
+  const [name, setName] = useState(item.name);
 
   const update = (e) => {
     e.preventDefault();
-    console.log(img);
+    const formData = new FormData();
+    formData.append("id", item.id);
+    formData.append("img", img);
+    formData.append("name", name);
+    updatemenu(formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     refimg.current.value = "";
     setName("");
   };

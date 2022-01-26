@@ -3,16 +3,31 @@ import {
   deleteProduct,
   getproduct,
   postProduct,
-  updateProduct,
-  postMenu,
+  editProduct,
+  getPizza,
+  getBurger,
+  getSauce,
+  getDessert,
+  getDrink,
+  editMenu,
+  getMenu,
 } from "../Controllers/productControllers.js";
 import upload from "../helper/fileHelper.js";
 const router = express.Router();
 
 router.get("/data", getproduct);
+router.get("/menus", getMenu);
+router.get("/pizza", getPizza);
+router.get("/burger", getBurger);
+router.get("/sauce", getSauce);
+router.get("/dessert", getDessert);
+router.get("/drink", getDrink);
+
 router.post("/postproduct", upload.single("img"), postProduct);
-router.post("/postmenu", postMenu);
-router.delete("/deleting", deleteProduct);
-router.put("/updating", updateProduct);
+
+router.put("/updatemenu", upload.single("img"), editMenu);
+router.put("/updateproduct", upload.single("img"), editProduct);
+
+router.delete("/deleteproduct", deleteProduct);
 
 export default router;

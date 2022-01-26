@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { postProduct } from "../Api/Api";
+import { v4 as uuidv4 } from "uuid";
 
 const FormAdd = () => {
   const history = useHistory();
@@ -16,29 +18,32 @@ const FormAdd = () => {
 
   const upload = (e) => {
     e.preventDefault();
-    let data;
+    const formData = new FormData();
+
     if (category === "other") {
-      data = {
-        img: img,
-        name: name,
-        ingredient: ingredient,
-        category: category,
-        price: price,
-        menu: menu,
-      };
+      formData.append("id", uuidv4());
+      formData.append("img", img);
+      formData.append("name", name);
+      formData.append("ingredient", ingredient);
+      formData.append("category", category);
+      formData.append("price", price);
+      formData.append("menu", menu);
     } else if (category === "pizza") {
-      data = {
-        img: img,
-        name: name,
-        ingredient: ingredient,
-        category: category,
-        sprice: sprice,
-        mprice: mprice,
-        lprice: lprice,
-        menu: menu,
-      };
+      formData.append("id", uuidv4());
+      formData.append("img", img);
+      formData.append("name", name);
+      formData.append("ingredient", ingredient);
+      formData.append("category", category);
+      formData.append("sprice", sprice);
+      formData.append("mprice", mprice);
+      formData.append("lprice", lprice);
+      formData.append("menu", menu);
     }
-    console.log(data);
+    postProduct(formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     setName("");
     setIngredient("");
     setCategory("");
@@ -151,11 +156,11 @@ const FormAdd = () => {
             <div className="custom_select">
               <select value={menu} onChange={(e) => setMenu(e.target.value)}>
                 <option>select menu</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Burger">Burger</option>
-                <option value="Sauce">Sauce</option>
-                <option value="Dessert">Dessert</option>
-                <option value="Drink">Drink</option>
+                <option value="pizza">Pizza</option>
+                <option value="burger">Burger</option>
+                <option value="sauce">Sauce</option>
+                <option value="dessert">Dessert</option>
+                <option value="drink">Drink</option>
               </select>
             </div>
           </div>
