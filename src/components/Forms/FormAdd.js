@@ -3,7 +3,8 @@ import { useHistory } from "react-router-dom";
 import { postProduct } from "../Api/Api";
 import { v4 as uuidv4 } from "uuid";
 
-const FormAdd = () => {
+const FormAdd = (props) => {
+  const { fetching } = props;
   const history = useHistory();
   const [img, setImg] = useState("");
   const refimg = useRef();
@@ -41,8 +42,10 @@ const FormAdd = () => {
     }
     postProduct(formData)
       .then((res) => {
-        console.log(res);
+        alert(res.data);
+        history.push("/productmanage");
       })
+      .then(() => fetching())
       .catch((err) => console.log(err));
     setName("");
     setIngredient("");

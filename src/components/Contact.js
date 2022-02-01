@@ -1,5 +1,5 @@
 import React from "react";
-// import { Map, Placemark, YMaps, ZoomControl } from "react-yandex-maps";
+import { Map, Placemark, YMaps, ZoomControl } from "react-yandex-maps";
 
 const Contact = () => {
   return (
@@ -13,7 +13,7 @@ const Contact = () => {
         <h3>Adress: Samarkand city, Bulvar district</h3>
         <h3>Adress filial: Samarkand city, Amir temur district</h3>{" "}
       </div>
-      {/* <YMaps>
+      <YMaps>
         <Map
           defaultState={{
             center: [39.64586867951609, 66.97508574660718],
@@ -24,7 +24,7 @@ const Contact = () => {
           <ZoomControl options={{ float: "right" }} />
           <Placemark geometry={[39.64586867951609, 66.97508574660718]} />
         </Map>
-      </YMaps> */}
+      </YMaps>
     </div>
   );
 };

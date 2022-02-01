@@ -6,30 +6,30 @@ import SauceCard from "./Cards/SauceCard";
 import { useState } from "react";
 import Contact from "./Contact";
 import { url } from "./Api/Api";
+import Vacancy from "./Vacancy";
 
 const MenuBodyCards = (props) => {
-  const { mdata, pdata, bdata, sdata, dedata, drdata } = props;
-  // console.log(menus);
-  // const products = data.products;
-  const menus = mdata;
+  const { everything, vacants } = props;
+  const menus = everything.menus;
+  const products = everything.products;
   const [n, setN] = useState(0);
   const showbody = () => {
     if (n === 0) {
-      return <PizzaCard pizza={pdata} />;
+      return <PizzaCard pizza={products.pizza} />;
     } else if (n === 1) {
-      return <BurgerCard burger={bdata} />;
+      return <BurgerCard burger={products.burger} />;
     } else if (n === 2) {
-      return <SauceCard sauce={sdata} />;
+      return <SauceCard sauce={products.sauce} />;
     } else if (n === 3) {
-      return <DessertCard dessert={dedata} />;
+      return <DessertCard dessert={products.dessert} />;
     } else if (n === 4) {
-      return <DrinkCard drink={drdata} />;
+      return <DrinkCard drink={products.drink} />;
     }
   };
 
   return (
     <>
-      {mdata && (
+      {menus && (
         <>
           <div className="menubar">
             {menus.map((menu, n) => {
@@ -48,6 +48,7 @@ const MenuBodyCards = (props) => {
           <div className="menubody"> {showbody()}</div>
         </>
       )}
+      <Vacancy vacants={vacants} />
       <Contact />
     </>
   );

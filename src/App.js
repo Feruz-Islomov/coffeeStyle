@@ -1,121 +1,148 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MenuBodyCards from "./components/MenuBodyCards";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import ProductManage from "./components/ProductManage";
 import Form from "./components/Forms/Form";
-import {
-  getMenus,
-  getPizza,
-  getBurger,
-  getSauce,
-  getDessert,
-  getDrink,
-} from "./components/Api/Api";
-// import data from "./data.js";
+import { url } from "./components/Api/Api";
+import FormLogin from "./components/Forms/FormLogin";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import Axios from "axios";
 
-// const localdata = JSON.parse(localStorage.getItem("coffeeMenuData")) || false;
+const localdata = JSON.parse(localStorage.getItem("everything")) || false;
 function App() {
-  // const [everything, setEverything] = useState(false);
-  const [menus, setMenus] = useState();
-  const [pizza, setPizza] = useState();
-  const [burger, setBurger] = useState();
-  const [sauce, setSauce] = useState();
-  const [dessert, setDessert] = useState();
-  const [drink, setDrink] = useState();
-
+  const [everything, setEverything] = useState(localdata);
+  const [vacants, setvacants] = useState(false);
   //fetch data from backend
-
+  const fetching = async () => {
+    try {
+      const { data } = await Axios.get(url + "/api/menus");
+      var menus = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/pizza");
+      var pizza = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/burger");
+      var burger = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/sauce");
+      var sauce = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/dessert");
+      var dessert = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/drink");
+      var drink = data;
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await Axios.get(url + "/api/vacancy");
+      setvacants(data);
+    } catch (err) {
+      console.log(err);
+    }
+    const datas = {
+      menus: menus,
+      products: {
+        pizza: pizza,
+        burger: burger,
+        sauce: sauce,
+        dessert: dessert,
+        drink: drink,
+      },
+    };
+    setEverything(datas);
+    localStorage.setItem("everything", JSON.stringify(datas));
+  };
   useEffect(() => {
-    getMenus()
-      .then((res) => {
-        setMenus(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [menus]);
-  useEffect(() => {
-    getPizza()
-      .then((res) => {
-        setPizza(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [pizza]);
-  useEffect(() => {
-    getBurger()
-      .then((res) => {
-        setBurger(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [burger]);
-  useEffect(() => {
-    getSauce()
-      .then((res) => {
-        setSauce(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [sauce]);
-  useEffect(() => {
-    getDessert()
-      .then((res) => {
-        setDessert(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [dessert]);
-  useEffect(() => {
-    getDrink()
-      .then((res) => {
-        setDrink(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [drink]);
-
-  //localStorage
-  // useEffect(() => {
-  //   localStorage.setItem("coffeeMenuData", JSON.stringify(everything));
-  // }, [everything]);
+    fetching();
+  }, []);
 
   return (
     <div className="app">
       <div className="choco"></div>
       <Router>
         <NavBar />
-        <Route
-          exact
-          path="/"
-          render={(props) => (
-            <MenuBodyCards
-              {...props}
-              mdata={menus}
-              pdata={pizza}
-              bdata={burger}
-              sdata={sauce}
-              dedata={dessert}
-              drdata={drink}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/productmanage"
-          render={(props) => (
-            <ProductManage
-              {...props}
-              mdata={menus}
-              pdata={pizza}
-              bdata={burger}
-              sdata={sauce}
-              dedata={dessert}
-              drdata={drink}
-            />
-          )}
-        />
-        <Route exact path="/form/:id" render={(props) => <Form {...props} />} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <MenuBodyCards
+                {...props}
+                vacants={vacants}
+                everything={everything}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            path="/productmanage"
+            component={() => (
+              <ProductManage
+                everything={everything}
+                vacants={vacants}
+                fetching={fetching}
+              />
+            )}
+          />
+          <ProtectedRoute
+            exact
+            path="/form/:id"
+            component={(props) => <Form {...props} fetching={fetching} />}
+          />
+          <Route
+            exact
+            path="/login"
+            render={(props) => <FormLogin {...props} />}
+          />
+          <Route
+            exact
+            path="*"
+            component={() => (
+              <Redirect
+                to={{
+                  pathname: "/",
+                }}
+              />
+            )}
+          />
+        </Switch>
       </Router>
     </div>
   );
 }
 
 export default App;
+// {/* <Route
+//           exact
+//           path="/productmanage"
+//           render={(props) => (
+//             <ProductManage {...props} everything={everything} />
+//           )}
+//         /> */}
+//         {/* <Route exact path="/form/:id" render={(props) => <Form {...props} />} /> */}
 // const [w, setW] = useState();
 // useEffect(() => {
 //   let allpizza = [];

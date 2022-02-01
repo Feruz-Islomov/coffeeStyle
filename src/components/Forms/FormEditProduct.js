@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { updateProduct } from "../Api/Api";
 
 const FormEditProduct = (props) => {
+  const { fetching } = props;
   const item = props.location.state.item;
 
   const history = useHistory();
@@ -37,7 +38,10 @@ const FormEditProduct = (props) => {
       formData.append("menu", menu);
     }
     updateProduct(formData)
-      .then((res) => console.log(res))
+      .then((res) => {
+        history.push("/productmanage");
+      })
+      .then(async () => await fetching())
       .catch((err) => console.log(err));
     setName("");
     setIngredient("");

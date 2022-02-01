@@ -1,7 +1,28 @@
+import "dotenv/config";
 import fs from "fs";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import {
+  savePizzaData,
+  getPizzaData,
+  saveBurgerData,
+  getBurgerData,
+  saveSauceData,
+  getSauceData,
+  saveDessertData,
+  getDessertData,
+  saveDrinkData,
+  getDrinkData,
+  saveMenuData,
+  getMenuData,
+  getAdmin,
+  saveAdmin,
+  getVacant,
+  saveVacant,
+} from "../helper/GetSaveDatas.js";
 
-export const getproduct = (req, res) => {
-  fs.readFile("./data/data.json", "utf-8", (err, data) => {
+export const getVacants = (req, res) => {
+  fs.readFile("./data/vacancy.json", "utf-8", (err, data) => {
     if (err) throw err;
     res.send(JSON.parse(data));
   });
@@ -43,6 +64,42 @@ export const getDrink = (req, res) => {
   });
 };
 ////////////////////////////////////////////////
+export const postLogin = async (req, res) => {
+  const body = req.body;
+  const dataAdmins = getAdmin();
+  const findExist = dataAdmins.find((admin) => admin.name === body.name);
+
+  if (!findExist) res.status(401).send("No such admin");
+  try {
+    if (await bcrypt.compare(body.password, findExist.password)) {
+      jwt.sign(
+        body,
+        process.env.TOKEN_SECRET,
+        { expiresIn: "15m" },
+        (err, jwt) => {
+          res.json({ jwt });
+        }
+      );
+    } else {
+      res.status(401).send("Not allowed");
+    }
+  } catch (err) {
+    res.status(500).send();
+  }
+};
+export const postRegister = async (req, res) => {
+  const body = req.body;
+  const dataAdmins = getAdmin();
+  try {
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+    const admin = { name: body.name, password: hashedPassword };
+    dataAdmins.push(admin);
+    saveAdmin(dataAdmins);
+    res.send("Successfully added");
+  } catch (err) {
+    res.status(500).send();
+  }
+};
 export const postProduct = (req, res) => {
   try {
     if (req.body.menu === "pizza") {
@@ -127,6 +184,44 @@ export const deleteProduct = (req, res) => {
     res.status(400).send(error.message);
   }
 };
+export const postVacant = (req, res) => {
+  try {
+    const a = req.body;
+    const b = req.file.path;
+    const existData = getVacant();
+    const newData = {
+      id: a.id,
+      name: a.name,
+      img: b,
+      description: a.description,
+      time: a.time,
+      salary: a.salary,
+      tel: a.tel,
+    };
+    existData.push(newData);
+    saveVacant(existData);
+    res.status(200).send("Vakansiya qo'shildi!");
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+export const deleteVacant = (req, res) => {
+  try {
+    console.log(req.body);
+    const body = req.body;
+    const existItems = getVacant();
+    const findExist = existItems.find((item) => item.id !== body.id);
+    if (!findExist) {
+      res.status(401).send("File does not exist");
+    }
+    deleteImg(body.img);
+    const filtered = existItems.filter((item) => item.id !== body.id);
+    saveVacant(filtered);
+    res.status(201).send("File Deleted successfully!");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
 ///////////////////////////////////////////////
 const addProduct = (req, res, getcb, savecb) => {
   if (req.body.menu === "pizza") {
@@ -188,7 +283,7 @@ const addProduct = (req, res, getcb, savecb) => {
     };
     existData.push(newData);
     savecb(existData);
-    res.status(200).send("Uploaded successfully");
+    res.status(200).send("Mahsulot qo'shildi!");
   }
 };
 const updateProduct = (req, res, getcb, savecb) => {
@@ -224,53 +319,3 @@ const deleteImg = (imgPath) => {
     console.log("file successfully deleted!");
   });
 };
-///////////////////
-const savePizzaData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/pizza.json", stringifyData);
-};
-const getPizzaData = () => {
-  const jsonData = fs.readFileSync("./data/pizza.json");
-  return JSON.parse(jsonData);
-};
-const saveBurgerData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/burger.json", stringifyData);
-};
-const getBurgerData = () => {
-  const jsonData = fs.readFileSync("./data/burger.json");
-  return JSON.parse(jsonData);
-};
-const saveSauceData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/sauce.json", stringifyData);
-};
-const getSauceData = () => {
-  const jsonData = fs.readFileSync("./data/sauce.json");
-  return JSON.parse(jsonData);
-};
-const saveDessertData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/dessert.json", stringifyData);
-};
-const getDessertData = () => {
-  const jsonData = fs.readFileSync("./data/dessert.json");
-  return JSON.parse(jsonData);
-};
-const saveDrinkData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/drink.json", stringifyData);
-};
-const getDrinkData = () => {
-  const jsonData = fs.readFileSync("./data/drink.json");
-  return JSON.parse(jsonData);
-};
-const saveMenuData = (data) => {
-  const stringifyData = JSON.stringify(data);
-  fs.writeFileSync("./data/menus.json", stringifyData);
-};
-const getMenuData = () => {
-  const jsonData = fs.readFileSync("./data/menus.json");
-  return JSON.parse(jsonData);
-};
-//////////////////////////////

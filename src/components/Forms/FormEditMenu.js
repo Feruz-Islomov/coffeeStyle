@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 import { updatemenu } from "../Api/Api";
 
 const FormEditMenu = (props) => {
+  const { fetching } = props;
   const item = props.location.state;
   const history = useHistory();
   const [img, setImg] = useState();
@@ -16,7 +17,10 @@ const FormEditMenu = (props) => {
     formData.append("img", img);
     formData.append("name", name);
     updatemenu(formData)
-      .then((res) => console.log(res))
+      .then((res) => {
+        history.push("/productmanage");
+      })
+      .then(async () => await fetching())
       .catch((err) => console.log(err));
     refimg.current.value = "";
     setName("");

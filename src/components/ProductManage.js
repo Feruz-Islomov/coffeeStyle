@@ -1,27 +1,39 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { deleteProduct, url } from "./Api/Api";
+import { deleteProduct, deleteVacant, url } from "./Api/Api";
 
 const ProductManage = (props) => {
-  const { mdata, pdata, bdata, sdata, dedata, drdata } = props;
-  const menus = mdata;
-  const pizza = pdata;
-  const burger = bdata;
-  const sauce = sdata;
-  const dessert = dedata;
-  const drink = drdata;
+  const { everything, vacants, fetching } = props;
+  const menus = everything.menus;
+  const products = everything.products;
+
   const deleteCall = (item) => {
     deleteProduct(item)
-      .then((res) => console.log(res))
+      .then((res) => {
+        fetching();
+      })
+      .catch((err) => console.log(err));
+  };
+  const deleteVac = (item) => {
+    deleteVacant(item)
+      .then((res) => {
+        fetching();
+      })
       .catch((err) => console.log(err));
   };
   const history = useHistory();
   return (
     <div>
-      {drdata ? (
+      {menus ? (
         <div>
           <button className="btn add" onClick={() => history.push("/form/add")}>
             + ADD PRODUCT
+          </button>
+          <button
+            className="btn add"
+            onClick={() => history.push("/form/addvacancy")}
+          >
+            + ADD VACANCY
           </button>
           <div className="menubar">
             <div>
@@ -37,7 +49,7 @@ const ProductManage = (props) => {
             </div>
           </div>
           <div className="groupedcards">
-            {pizza.map((item, key) => {
+            {products.pizza.map((item, key) => {
               return (
                 <div className="menucard pizza" key={key}>
                   <div>
@@ -89,7 +101,7 @@ const ProductManage = (props) => {
             </div>
           </div>
           <div className="groupedcards">
-            {burger.map((item, key) => {
+            {products.burger.map((item, key) => {
               return (
                 <div className="menucard burger" key={key}>
                   <div>
@@ -139,7 +151,7 @@ const ProductManage = (props) => {
             </div>
           </div>
           <div className="groupedcards">
-            {sauce.map((item, key) => {
+            {products.sauce.map((item, key) => {
               return (
                 <div className="menucard sauce" key={key}>
                   <div>
@@ -187,7 +199,7 @@ const ProductManage = (props) => {
             </div>
           </div>
           <div className="groupedcards">
-            {dessert.map((item, key) => {
+            {products.dessert.map((item, key) => {
               return (
                 <div className="menucard dessert" key={key}>
                   <div>
@@ -235,7 +247,7 @@ const ProductManage = (props) => {
             </div>
           </div>
           <div className="groupedcards">
-            {drink.map((item, key) => {
+            {products.drink.map((item, key) => {
               return (
                 <div className="menucard drink" key={key}>
                   <div>
@@ -268,6 +280,42 @@ const ProductManage = (props) => {
                 </div>
               );
             })}
+          </div>
+          <div className="vacancies">
+            {vacants
+              ? vacants.map((vacant, key) => {
+                  return (
+                    <div className="vacancy" key={key}>
+                      <img
+                        className="vimg"
+                        src={`${url + "/" + vacant.img}`}
+                        alt={vacant.name}
+                      />
+                      <h3>{vacant.name}</h3>
+                      <div>
+                        <b>Tajriba va Tavsif: </b> {vacant.description}
+                      </div>
+                      <p>
+                        <b>Ish vaqti:</b> {vacant.time}
+                      </p>
+                      <p>
+                        <b>Ish haqqi:</b> {vacant.salary} so'm
+                      </p>
+                      <p>
+                        <b>Tel:</b> +{vacant.tel}
+                      </p>
+                      <div className="button">
+                        <button
+                          className="btn delete"
+                          onClick={() => deleteVac(vacant)}
+                        >
+                          DELETE
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
           </div>
         </div>
       ) : null}
