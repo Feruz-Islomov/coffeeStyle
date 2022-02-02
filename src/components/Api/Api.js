@@ -1,6 +1,6 @@
 import Axios from "axios";
 ////////////////////////////////////
-export const url = "http://localhost:5000"; //when deployed think about
+export const url = "https://coffeestyleback.herokuapp.com"; //when deployed think about
 // export const getProducts = () => {
 //   return Axios.get(url + "/api/data");
 // };

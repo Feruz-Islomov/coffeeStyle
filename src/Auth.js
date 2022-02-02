@@ -1,10 +1,10 @@
 class Auth {
   constructor() {
-    if (JSON.parse(localStorage.getItem("jwt"))) {
+    const token = localStorage.getItem("jwt");
+    if (token) {
       this.authenticated = true;
-    } else {
-      this.authenticated = false;
     }
+    this.authenticated = false;
   }
   login(cb) {
     this.authenticated = true;
