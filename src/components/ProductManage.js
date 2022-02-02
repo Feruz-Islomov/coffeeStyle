@@ -115,9 +115,7 @@ const ProductManage = (props) => {
                       <p>{item.comment}</p>
                     </div>
                     <h4 className="price">
-                      <i>
-                        {item.price} so'm <br /> (cheese + {item.eprice})
-                      </i>
+                      <i>{item.price} so'm</i>
                     </h4>
                   </div>
                   <div className="button">

@@ -32,6 +32,9 @@ export const postVacant = (item) => {
 export const postLogin = (user) => {
   return Axios.post(url + "/api/login", user);
 };
+export const postRegister = (user) => {
+  return Axios.post(url + "/api/register", user);
+};
 ///////////////////////////////////
 
 export const updatemenu = (item) => {

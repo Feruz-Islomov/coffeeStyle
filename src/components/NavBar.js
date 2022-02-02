@@ -37,7 +37,7 @@ const NavBar = () => {
             >
               Logout
             </Link>
-            {/* <Link to="/">Register</Link> */}
+            {/* <Link to="/register">Register</Link> */}
           </>
         ) : !auth ? (
           <Link to="/login">Admin</Link>

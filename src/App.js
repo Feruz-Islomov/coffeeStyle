@@ -11,6 +11,7 @@ import ProductManage from "./components/ProductManage";
 import Form from "./components/Forms/Form";
 import { url } from "./components/Api/Api";
 import FormLogin from "./components/Forms/FormLogin";
+import FormRegister from "./components/Forms/FormRegister";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Axios from "axios";
 
@@ -112,6 +113,13 @@ function App() {
             path="/form/:id"
             component={(props) => <Form {...props} fetching={fetching} />}
           />
+          <ProtectedRoute
+            exact
+            path="/register"
+            component={(props) => (
+              <FormRegister {...props} fetching={fetching} />
+            )}
+          />
           <Route
             exact
             path="/login"
@@ -135,58 +143,3 @@ function App() {
 }
 
 export default App;
-// {/* <Route
-//           exact
-//           path="/productmanage"
-//           render={(props) => (
-//             <ProductManage {...props} everything={everything} />
-//           )}
-//         /> */}
-//         {/* <Route exact path="/form/:id" render={(props) => <Form {...props} />} /> */}
-// const [w, setW] = useState();
-// useEffect(() => {
-//   let allpizza = [];
-//   let allburger = [];
-//   let allsauce = [];
-//   let alldessert = [];
-//   let alldrink = [];
-//   function addCat() {
-//     data.products.pizza.forEach((item) => {
-//       allpizza.push({ ...item, category: "pizza", menu: "pizza" });
-//     });
-//     data.products.burger.forEach((item) => {
-//       allburger.push({ ...item, category: "other", menu: "burger" });
-//     });
-//     data.products.sauce.forEach((item) => {
-//       allsauce.push({ ...item, category: "other", menu: "sauce" });
-//     });
-//     data.products.dessert.forEach((item) => {
-//       alldessert.push({ ...item, category: "other", menu: "dessert" });
-//     });
-//     data.products.drink.forEach((item) => {
-//       alldrink.push({ ...item, category: "other", menu: "drink" });
-//     });
-//     setW({
-//       pizza: allpizza,
-//       burger: allburger,
-//       sauce: allsauce,
-//       dessert: alldessert,
-//       drink: alldrink,
-//     });
-//   }
-//   addCat();
-
-//   // setW({});
-//   fetch("/api/posting", {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(w),
-//   })
-//     .then((res) => res.json())
-//     .then((res) => console.log(res))
-//     .catch((err) => console.log(err));
-//   console.log(w);
-// }, []);

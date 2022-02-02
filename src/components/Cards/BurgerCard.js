@@ -18,9 +18,7 @@ const BurgerCard = ({ burger }) => {
                 <div>{product.ingredient}</div>
               </div>
               <div className="price">
-                <i>
-                  {product.price} so'm <br /> (cheese + 2000)
-                </i>
+                <i>{product.price} so'm</i>
               </div>
             </div>
           );
